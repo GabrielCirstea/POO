@@ -6,7 +6,7 @@ __Membri privati:__
 * denumire film
 * regizor
 * gen
-* rating
+* rating  
 __Metode:__  
 * constructori
   * initial
