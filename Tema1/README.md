@@ -2,12 +2,12 @@
 
 ## Proiect 18  
 ## Clasa de filme
-`membri privati:`  
+__Membri privati:__  
 * denumire film
 * regizor
 * gen
 * rating
-`metode:`  
+__Metode:__  
 * constructori
   * initial
   * de copiere
@@ -18,10 +18,10 @@
 ### Meniu
 
 1. Se poate citi cate un film
-  * denumire
-  * gen
-  * regizor
-  * rating
+   * denumire
+   * gen
+   * regizor
+   * rating
 1. Se afiseaza toate filmele citite pana in momentul respectiv
 1. Se pot compara 2 filme
 1. Se pot modifica detaliile dilmelor
