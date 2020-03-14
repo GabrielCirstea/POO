@@ -222,13 +222,14 @@ int afisare_filme(myVector<film> &filme)
 
 void comparare(myVector<film> &filme)
 {///compara 2 filme dupa rating
-    if(afisare_filme(filme)<2)
+    afisare_filme(filme);
+    int nr = filme.get_size();
+    if(nr < 2)
         {
             cout<<"Isuficiente filme pt comparare\n";
             return;
         }
     int index1, index2;
-    int nr = filme.get_size();
     cout<<"\nAlegeti indexul unui film ";
     cin>>index1;
     cout<<"\nAlegeti indexul altui film ";
