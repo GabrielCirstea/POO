@@ -17,7 +17,8 @@ public:
 	const string& get_nume(){return nume_abonament;};
 	float get_pret(){return pret;};
 	int get_prioada(){return perioada;};
-	static int get_count(){return nrAbonamente;};
+  virtual float get_suma(){return pret*perioada;}; // pretul abonamentului platit lunar
+  static int get_count(){return nrAbonamente;};
 	virtual void citire(istream& in);
 	virtual void afisare(ostream& out);
 
@@ -93,7 +94,8 @@ public:
   ~AbonamentPremium();
 
 	int get_reducere(){return reducere;};
-	static int get_count(){return nrPremium;};
+  float get_suma();
+  static int get_count(){return nrPremium;};
 	void citire(istream& in);
 	void afisare(ostream& out);
 
@@ -146,4 +148,10 @@ void AbonamentPremium::operator=(AbonamentPremium& a)
 {
   (Abonament&)(*this) = a;
   this->reducere = a.reducere;
+}
+float AbonamentPremium::get_suma()
+{
+  float suma = Abonament::get_suma();
+  suma -= reducere*suma/100;
+  return suma;
 }

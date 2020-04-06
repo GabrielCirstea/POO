@@ -124,7 +124,8 @@ public:
 	//~Abonat // daca o fi nevoie....cred ca se descurca si fara sa-l fac eu
 	//poate un get-er
 	const string& get_phone(){return nr_tel;};
-	Abonat& operator=(Abonat &a);
+  float get_total(){return abon->get_suma();};
+  Abonat& operator=(Abonat &a);
 	void afisare(ostream &out);
 	void citire(istream &in);
 	friend ostream& operator<<(ostream &out,Abonat &a);
@@ -212,6 +213,7 @@ void testAbonat()
 	cin>>b;
 	cout<<"----\n";
 	cout<<b;
+  cout<<"Total de plata: "<<b.get_total()<<endl;
 }
 void testAbonament()
 {
