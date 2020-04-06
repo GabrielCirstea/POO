@@ -91,7 +91,7 @@ ostream& operator<<(ostream &out,Persoana &p){
 	p.afisare(out);
 	return out;
 }
-Persoana& Persoana::operator=(Persoana &p){
+ Persoana& Persoana::operator=(Persoana &p){
 	nrPers++; 	// se  creaza o persoana nou
 	this->id = p.id;
 	this->nume = p.nume;
@@ -109,9 +109,14 @@ void testPersoana(){
 	cout<<b;
 	cout<<Persoana::get_count();
 }
+//-----------------------
+// clasa ABONAT
+//-----------------------
 class Abonat: public Persoana{
 private:
 	string nr_tel;
+  Abonament *abon;
+  void set_abonament(istream& in);  //la citirea abonatului se va crea si abonamentul lui personal si unic(in limita imaginatiei)
 public:
 	Abonat(string,int,string,string);
 	Abonat(string,Persoana &p);
@@ -133,10 +138,32 @@ Abonat::Abonat(string nr_tel="-",int id=0,string nume="",string cnp=""):Persoana
 Abonat::Abonat(string tel,Persoana &p):Persoana(p)
 {
 	this->nr_tel = tel;
+  abon = nullptr;
 }
 Abonat::Abonat(Abonat &a):Persoana(a)
 {
 	this->nr_tel = a.nr_tel;
+  abon = nullptr;
+}
+void Abonat::set_abonament(istream& in)
+{
+  cout<<"Ce abonament doriti?(1-premium,0-normal):";
+  int opt;
+  in>>opt;
+  in.get();
+  switch(opt)
+    {
+    case 1:
+      {
+        this->abon = new AbonamentPremium;
+        in>>*this->abon;
+      }break;
+    case 0:
+      {
+        this->abon = new Abonament;
+        cin>>*this->abon;
+      }break;
+    }
 }
 Abonat& Abonat::operator=(Abonat &a)
 {
@@ -149,6 +176,8 @@ void Abonat::afisare(ostream &out)
 {
 	Persoana::afisare(out);
 	out<<"nr_tel: "<<nr_tel<<endl;
+  if(abon)
+    cout<<*abon;
 }
 void Abonat::citire(istream &in)
 {
@@ -162,6 +191,7 @@ void Abonat::citire(istream &in)
 		in>>numer;
 	}
 	nr_tel = numer;
+  this->set_abonament(in);
 }
 istream& operator>>(istream &in,Abonat &a)
 {
@@ -176,22 +206,25 @@ ostream& operator<<(ostream &out,Abonat &a)
 void testAbonat()
 {
 	Abonat a("12",1,"darve","ceva cenp");
-	cout<<(Persoana&)a;
-	Abonat b(a);
+  Abonat b(a);
 	system("clear");
 	cout<<b<<endl;
 	cin>>b;
 	cout<<"----\n";
 	cout<<b;
 }
-int main(){
-	cout<<"Salutare lume!\n";
+void testAbonament()
+{
 	Abonament ab("primul abonament",24.7f,23);
 	cout<<ab;
-	Abonament ac = ab;
+	AbonamentPremium ac(20,ab);
 	cout<<ab;
-	cout<<Abonament::get_count();
-	cin>>ab;
-	cout<<"---\n"<<ab;
+	cout<<Abonament::get_count()<<endl;
+	cin>>ac;
+	cout<<"---\n"<<ac;
+}
+int main(){
+	cout<<"Salutare lume!\n";
+  testAbonat();
 	return 0;
 }
