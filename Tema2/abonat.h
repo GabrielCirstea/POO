@@ -132,9 +132,10 @@ public:
 	~Abonat(); // daca o fi nevoie....cred ca se descurca si fara sa-l fac eu
 	//poate un get-er
 	const string& get_phone() const {return nr_tel;};
-  float get_total() const {return abon ? abon->get_suma() : 0;};
+  float get_total(){return abon ? abon->get_suma() : 0;};
   bool set_number(const string& number);
 	void afisare(ostream &out) const;
+  void set_abonament(Abonament*);
   void set_abonament(Abonament&);
   void set_abonament(AbonamentPremium&);
 	void citire(istream &in);
@@ -236,7 +237,18 @@ void Abonat::operator=(const Abonat& a)
   (Persoana&)(*this) = a;
   this->nr_tel = a.nr_tel;
   if(a.abon)
-    this->set_abonament(*a.abon);
+    {
+      this->set_abonament(a.abon);
+    }
+}
+void Abonat::set_abonament(Abonament* a)
+{
+  if(abon)
+    delete abon;
+  if(dynamic_cast<AbonamentPremium*>(a))
+    abon = new AbonamentPremium(*(AbonamentPremium*)a);
+  else
+    abon = new Abonament(*a);
 }
 void Abonat::set_abonament(Abonament& a)
 {

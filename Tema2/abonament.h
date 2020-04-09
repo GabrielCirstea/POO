@@ -17,7 +17,7 @@ public:
 	const string& get_nume()const {return nume_abonament;};
 	float get_pret()const{return pret;};
 	int get_prioada()const{return perioada;};
-  virtual float get_suma()const{cout<<"simplu\n";return pret*perioada;}; // pretul abonamentului platit lunar
+  virtual float get_suma()const{return pret*perioada;}; // pretul abonamentului platit lunar
   static int get_count() {return nrAbonamente;};
   void set_nume(const string&);
   void set_pret(float);
