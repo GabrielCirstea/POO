@@ -24,7 +24,7 @@ public:
     //set-eri
     void set_nume(string& numeNou){nume=numeNou;};
     bool set_CNP(string& cnpNou);
-		Persoana& operator=(const Persoana &p);
+    virtual void operator=(const Persoana &p);
 		virtual void citire(istream &in);
 		virtual	void afisare(ostream &out) const;
 		friend istream& operator>>(istream &in,Persoana &p);
@@ -79,12 +79,13 @@ void Persoana::citire(istream &in){
 	cout<<"cnp: ";
   string CNP;
   in>>CNP;
-  while(!set_CNP(CNP))
+  cnp = CNP;
+  /*while(!set_CNP(CNP))
     {
       cout<<"CNP-ul trebuie sa aiba 13 cifre, nu litere sau alte caractere\n";
       cout<<"CNP: ";
       in>>CNP;
-    }
+      }*/
 }
 istream& operator>>(istream &in,Persoana &p){
 	p.citire(in);
@@ -99,13 +100,12 @@ ostream& operator<<(ostream &out,Persoana &p){
 	p.afisare(out);
 	return out;
 }
- Persoana& Persoana::operator=(const Persoana &p){
+void Persoana::operator=(const Persoana &p){
 	nrPers++; 	// se  creaza o persoana nou
 	this->id = p.id;
 	this->nume = p.nume;
 	this->cnp = p.cnp;
 
-	return *this;
 }
 void testPersoana(){
 	Persoana a(1,"Andrei","1234567890123");
@@ -124,39 +124,51 @@ class Abonat: public Persoana{
 private:
 	string nr_tel;
   Abonament *abon;    //fiecare abonat are abonamentul lui
-  void set_abonament(istream& in);  //la citirea abonatului se va crea si abonamentul lui personal si unic(in limita imaginatiei)
+  void set_readAbon(istream& in);  //la citirea abonatului se va crea si abonamentul lui personal si unic(in limita imaginatiei)
 public:
 	Abonat(string,int,string,string);
 	Abonat(string,const Persoana &p);
 	Abonat(const Abonat &a);
-	//~Abonat // daca o fi nevoie....cred ca se descurca si fara sa-l fac eu
+	~Abonat(); // daca o fi nevoie....cred ca se descurca si fara sa-l fac eu
 	//poate un get-er
 	const string& get_phone() const {return nr_tel;};
-  float get_total() const {return abon->get_suma();};
-  Abonat& operator=(Abonat &a);
+  float get_total() const {return abon ? abon->get_suma() : 0;};
   bool set_number(const string& number);
 	void afisare(ostream &out) const;
+  void set_abonament(Abonament&);
+  void set_abonament(AbonamentPremium&);
 	void citire(istream &in);
 	friend ostream& operator<<(ostream &out,Abonat &a);
 	friend istream& operator>>(istream &in,Abonat &a);
   void operator=(const Abonat&);
+  Abonat& operator[](int i)
+  {
+    return this[i];
+  }
 };
 Abonat::Abonat(string nr_tel="-",int id=0,string nume="",string cnp=""):Persoana(id,nume,cnp)
 {
 	this->nr_tel = nr_tel;
+  abon = NULL;
 }
 //daca ai persoana ar trebui sa vi si cu numar de telefon;
 Abonat::Abonat(string tel,const Persoana &p):Persoana(p)
 {
 	this->nr_tel = tel;
-  abon = nullptr;
+  abon = NULL;  //nullptr;
 }
 Abonat::Abonat(const Abonat &a):Persoana(a)
 {
 	this->nr_tel = a.nr_tel;
-  abon = nullptr;
+  abon = NULL;
+  this->set_abonament(*a.abon);
 }
-void Abonat::set_abonament(istream& in)
+Abonat::~Abonat()
+{
+  if(abon)
+    delete abon;
+}
+void Abonat::set_readAbon(istream& in)
 {
   cout<<"Ce abonament doriti?(1-premium,0-normal):";
   int opt;
@@ -181,7 +193,9 @@ void Abonat::afisare(ostream &out) const
 	Persoana::afisare(out);
 	out<<"nr_tel: "<<nr_tel<<endl;
   if(abon)
-    cout<<*abon;
+    out<<"---Abonament:---\n"<<*abon;
+  else
+    out<<"---Fara abonament---\n";
 }
 bool Abonat::set_number(const string& number)
 {//seteaza numarul de telefon doar daca are 10 "cifre"
@@ -198,13 +212,14 @@ void Abonat::citire(istream &in)
 	cout<<"numar telefon: ";
 	string numer;
 	in>>numer;
-	while(!set_number(numer))
+  nr_tel = numer;
+	/*while(!set_number(numer))
 	{
 		cout<<"Numarul trebuie sa fie de 10 caractere\n";
     cout<<"Numar: ";
 		in>>numer;
-	}
-  this->set_abonament(in);
+    }*/
+  this->set_readAbon(in);
 }
 istream& operator>>(istream &in,Abonat &a)
 {
@@ -220,4 +235,18 @@ void Abonat::operator=(const Abonat& a)
 {
   (Persoana&)(*this) = a;
   this->nr_tel = a.nr_tel;
+  if(a.abon)
+    this->set_abonament(*a.abon);
+}
+void Abonat::set_abonament(Abonament& a)
+{
+  if(abon)
+    delete abon;
+  abon = new Abonament(a);
+}
+void Abonat::set_abonament(AbonamentPremium& a)
+{
+  if(abon)
+    delete abon;
+  abon = new AbonamentPremium(a);
 }
