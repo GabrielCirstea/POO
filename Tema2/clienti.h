@@ -19,6 +19,9 @@ class Clienti
   void read_client(istream &in);          //citeste un client
   void insert_client(const Abonat& a);
   void afisare(ostream &out) ;
+
+  friend istream& operator>>(istream& in, Clienti &BD);
+  friend ostream& operator<<(ostream& out,Clienti &BD);
 };
 float Clienti::get_Bill()
 {
@@ -64,4 +67,14 @@ void Clienti::afisare(ostream& out)
       out<<abonati[i];
     }
   cout<<"....................\n";
+}
+istream& operator>>(istream& in, Clienti &BD)
+{
+  BD.read_client(in);
+  return in;
+}
+ostream& operator<<(ostream& out,Clienti &BD)
+{
+  BD.afisare(out);
+  return out;
 }

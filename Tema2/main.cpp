@@ -89,11 +89,11 @@ void meniu()
         {
         case 1:
           {
-            BD.read_client(cin);
+            cin>>BD;
           }break;
         case 2:
           {
-            BD.afisare(cout);
+            cout<<BD;
           }break;
         case 3:
           {
@@ -101,7 +101,7 @@ void meniu()
           }break;
         case 4:
           {
-            BD.afisare(cout);
+            cout<<BD;
             cout<<"Alegeti numarul indexul abonatului: ";
             int index;
             cin>>index;
