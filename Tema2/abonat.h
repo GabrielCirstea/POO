@@ -36,7 +36,7 @@ Persoana::Persoana(int id = 0,string nume = "", string cnp = ""){
 	if(!id)
 		this->id = nrPers;	//ii punem in ordinea sosirii
 	else
-		this->id = id; //il punem cate e setat, desi nu as face asta
+		this->id = id;
 	this->nume = nume;
 	this->cnp = cnp;
 }
@@ -80,12 +80,12 @@ void Persoana::citire(istream &in){
   string CNP;
   in>>CNP;
   cnp = CNP;
-  /*while(!set_CNP(CNP))
+  while(!set_CNP(CNP))
     {
       cout<<"CNP-ul trebuie sa aiba 13 cifre, nu litere sau alte caractere\n";
       cout<<"CNP: ";
       in>>CNP;
-      }*/
+      }
 }
 istream& operator>>(istream &in,Persoana &p){
 	p.citire(in);
@@ -212,12 +212,12 @@ void Abonat::citire(istream &in)
 	string numer;
 	in>>numer;
   nr_tel = numer;
-	/*while(!set_number(numer))
+	while(!set_number(numer))
 	{
 		cout<<"Numarul trebuie sa fie de 10 caractere\n";
     cout<<"Numar: ";
 		in>>numer;
-    }*/
+    }
   this->set_readAbon(in);
 }
 istream& operator>>(istream &in,Abonat &a)
