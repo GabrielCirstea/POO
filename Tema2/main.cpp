@@ -85,7 +85,7 @@ void insertLaGreu(Clienti &BD)
   BD.insert_client(a1);
   BD.insert_client(a2);
 }
-void modificare_abonat(Clienti BD, int index)
+void modificare_abonat(Clienti &BD, int index)
 {//se modifica abonatul index
   cout<<"1. Nume.\n";
   cout<<"2. Numar de telefon.\n";
@@ -121,10 +121,10 @@ void modificare_abonat(Clienti BD, int index)
       {
         cout<<"Noul abonament";
         BD[index].set_readAbon(cin);
-      }
+      }break;
     case 0:{
       return;
-    }
+      }
     }
 }
 void meniu()
