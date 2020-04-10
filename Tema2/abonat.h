@@ -49,7 +49,7 @@ Persoana::Persoana(const Persoana &p){
 Persoana::~Persoana(){
 	nrPers--;
 	id = 0;
-	// atribitele sunt alocate static
+	// atribuitele sunt alocate static
 	// practic nu trebuie destructor explicit, am pus doar pt nrPers.
 }
 bool Persoana::set_CNP(string& cnpNou)
@@ -124,17 +124,17 @@ class Abonat: public Persoana{
 private:
 	string nr_tel;
   Abonament *abon;    //fiecare abonat are abonamentul lui
-  void set_readAbon(istream& in);  //la citirea abonatului se va crea si abonamentul lui personal si unic(in limita imaginatiei)
 public:
 	Abonat(string,int,string,string);
 	Abonat(string,const Persoana &p);
 	Abonat(const Abonat &a);
-	~Abonat(); // daca o fi nevoie....cred ca se descurca si fara sa-l fac eu
+	~Abonat();
 	//poate un get-er
 	const string& get_phone() const {return nr_tel;};
   float get_total(){return abon ? abon->get_suma() : 0;};
   bool set_number(const string& number);
 	void afisare(ostream &out) const;
+  void set_readAbon(istream& in);  //la citirea abonatului se va crea si abonamentul lui personal si unic(in limita imaginatiei)
   void set_abonament(Abonament*);
   void set_abonament(Abonament&);
   void set_abonament(AbonamentPremium&);
@@ -142,10 +142,6 @@ public:
 	friend ostream& operator<<(ostream &out,Abonat &a);
 	friend istream& operator>>(istream &in,Abonat &a);
   void operator=(const Abonat&);
-  Abonat& operator[](int i)
-  {
-    return this[i];
-  }
 };
 Abonat::Abonat(string nr_tel="-",int id=0,string nume="",string cnp=""):Persoana(id,nume,cnp)
 {
@@ -171,6 +167,8 @@ Abonat::~Abonat()
 }
 void Abonat::set_readAbon(istream& in)
 {
+  if(abon)
+    delete abon;
   cout<<"Ce abonament doriti?(1-premium,0-normal):";
   int opt;
   in>>opt;
@@ -243,11 +241,13 @@ void Abonat::operator=(const Abonat& a)
 }
 void Abonat::set_abonament(Abonament* a)
 {
-  if(abon)
+  if(abon)  //daca avem abonament vechi il stergem
     delete abon;
-  if(dynamic_cast<AbonamentPremium*>(a))
+  if(dynamic_cast<AbonamentPremium*>(a))  //incercam sa facem casting
+    // daca reusim copiem preimiu
     abon = new AbonamentPremium(*(AbonamentPremium*)a);
   else
+    //copiem abonament simplu
     abon = new Abonament(*a);
 }
 void Abonat::set_abonament(Abonament& a)
@@ -258,7 +258,7 @@ void Abonat::set_abonament(Abonament& a)
 }
 void Abonat::set_abonament(AbonamentPremium& a)
 {
-  if(abon)
+  if(abon)   // stergem abonamentul daca avem un pointer valid
     delete abon;
   abon = new AbonamentPremium(a);
 }

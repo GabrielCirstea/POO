@@ -110,9 +110,9 @@ public:
   ~AbonamentPremium();
 
 	int get_reducere() const {return reducere;};
-  float get_suma() const;
+  float get_suma() const;  // suma de plata pe toate luniile
   static int get_count(){return nrPremium;};
-  void set_discount(int);
+  void set_discount(int);    //modificarea discount-ului
   void citire(istream& in);
 	void afisare(ostream& out) const;
 
