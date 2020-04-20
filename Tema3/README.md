@@ -4,7 +4,9 @@
 
 ### Clasa pur abstarcta:
    Clasa pur abstracta este o clasa care contine cel putin o metoda virtula de genul:  
-   ````virtual type name() = 0;```
+   ```
+   virtual type name() = 0;
+   ```
 ### Clasa Produs
 * Continut:
   * Avem niste atribute simple: denumire, cantitate, pret unita(il vezi cum vrei)
