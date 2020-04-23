@@ -41,6 +41,9 @@ void testPizza()
   p.push_back(a);
   Pizza p2("nume",p,3);
   cout<<p2;
+  cout<<"Sa citim o pizza";
+  cin>>p2;
+  cout<<p2;
 }
 int main()
 {

@@ -24,9 +24,10 @@ void ingredient::citire(istream& in)
   cout<<"Denumire: ";
   getline(in,denumire);
   cout<<"Cantitate: ";
-  cin>>cantitate;
+  in>>cantitate;
   cout<<"Pret: ";
-  cin>>pret;
+  in>>pret;
+  in.get();  // curatam buffer-ul dupa noi
 }
 void ingredient::afisare(ostream& out)
 {
@@ -65,6 +66,7 @@ Pizza::Pizza(Pizza& P)
 }
 void Pizza::set_ingred(list<ingredient> &ingred)
 {
+  reteta.clear(); // sa stergem ce aveam inainte, in caz ca nu se sterge singur
   reteta = ingred;
 }
 void Pizza::add_ingred(ingredient &ingred)
@@ -106,7 +108,7 @@ void Pizza::afisare(ostream& out)
   out<<"Ingrediente:\n";
   list_ingred();
   cout<<"Manopera: "<<manopera<<endl;
-  cout<<"Pret total(va urma)\n";
+  cout<<"Pret total: "<<calc_pret()<<endl;
 }
  ostream& operator<<(ostream& out, Pizza& P)
 {
@@ -115,23 +117,25 @@ void Pizza::afisare(ostream& out)
 }
 void Pizza::citire(istream& in)
 {
-  cout<<"Titlul Pizzei:";
+  reteta.clear();
+  cout<<"Titlul Pizzei: ";
   in>>denumire;
-  cout<<"Ingredientele.\nCate ingrediente ati vrea sa introduceti?";
+  cout<<"Ingredientele.\nCate ingrediente ati vrea sa introduceti?\n";
   int n;
   in>>n;
+  in.get();
   while(n)
     {
       ingredient ing;
       in>>ing;
       reteta.push_back(ing);
       n--;
-
       if(!n)
         {
           cout<<"Mai vreti sa introduceti si alte ingrediente?\n";
           cout<<"Introduceti numarul acestora(0 - daca vreti sa va opriti)\n";
           cin>>n;
+          cin.get();
         }
     }
 }
@@ -145,4 +149,14 @@ void Pizza::operator=(Pizza& P)
   denumire = P.denumire;
   reteta = P.reteta;
   manopera = P.manopera;
+}
+float Pizza::calc_pret()
+{
+  float pret=0;
+  for(ingredient i:reteta)
+    {
+      pret+=i.get_price()*i.get_cant();
+    }
+  pret+=manopera;
+  return pret;
 }

@@ -46,7 +46,7 @@ class Pizza:public produs
   //get-eri
   float get_manopera() const {return manopera;};
   const list<ingredient>& get_ingred() const {return reteta;};
-  float calc_pret(){cout<<"ceplm!";return 0;}; // pretul total al produsului
+  float calc_pret(); // pretul total al produsului
   //set-eri
   void set_manopera(float pret){manopera = pret;};
   void set_ingred(list<ingredient>& ingred); // seteaza o noua lista de ingrediente
