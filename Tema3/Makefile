@@ -2,7 +2,7 @@
 objects = main.o produs.o
 target = main
 
-sgart: $(objects)
+start: $(objects)
 	g++ $(objects) -o $(target)
 
 main.o: main.cpp
