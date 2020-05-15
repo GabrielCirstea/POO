@@ -50,9 +50,10 @@ istream& operator>>(istream& in, ingredient& ing)
 // _________PIZZA__________
 //_________________________
 Pizza::Pizza(string nume,float pret):manopera(pret),denumire(nume)
-{}
+{cout<<"Piza goala\n";}
 Pizza::Pizza(string nume,list<ingredient> &ingred, float pret):manopera(pret),denumire(nume)
 {
+  cout<<"Pizza facuta\n";
   set_ingred(ingred); // ca sa folosim metoda
 }
 Pizza::Pizza(Pizza& P):manopera(P.manopera),denumire(P.denumire),reteta(P.reteta)
@@ -158,6 +159,7 @@ float Pizza::calc_pret() const
 int PizzaVegetariana::numarVegetale = 0;
 PizzaVegetariana::PizzaVegetariana(string nume, list<ingredient>& ingred, float pret):Pizza(nume,ingred,pret)   // pret manopera
 {
+  cout<<"Alta vegetala alocata\n";
   numarVegetale++;
 }
 PizzaVegetariana::PizzaVegetariana(string nume,float pret):Pizza(nume,pret)
@@ -208,7 +210,7 @@ PizzaOnline::PizzaOnline(PizzaOnline& p):Pizza(p),produsOnline(p.distanta)
 float PizzaOnline::calc_pret() const
 {
 	int pret = Pizza::calc_pret();
-	pret+= distanta * pret/20;
+	pret+= distanta/10 * pret/20;
 	return pret;
 }
 void PizzaOnline::afisare(ostream& out) const

@@ -1,0 +1,46 @@
+#+TITLE: PIZZERIA BIG BAD AZZ
+# e proiectul meu, e numele meu
+
+* Pasi:
+  # probabil ca aici vor fi niste pasi care trebui facuti
+** Clasa pur abstracta
+   Clasa pur abstracta este o clasa care contine cel putin o metoda virtula de genul:
+   ~virtual type name() = 0;~
+   Inca o clasa ambstracta produsOnline, pt comenziile online
+** Clasa Ingredient:
+*** Continut:
+   - Avem niste atribute simple: denumire, cantitate, pret unita(il vezi cum vrei)
+   - Constructori de initializare si de copoiere.
+   - Ceva get-eri si set-eri, pt eventuale nevoi
+   - functii de citire si afisare
+   - supraincarcare pe <<, >>, =
+*** Obiectiv:
+  - Va fi folosita pt lista de ingrediente necesare produselor.
+** Clasa Pizza:
+*** Continut:
+Contine atributeme: denumire, list<ingrediente>, manopera.
+*** Metode:
+Are constructori de initializare cu parametri pentru nume, manopera si lista de ingrediente
+Constructor de copiere, supra incarcare pe =.
+Supra incarcare pe << si >>.
+Set-eri si get-eri pentri atribute.
+Metode pentru adaugare si stergere ingrediente si schimbarea intregii liste de ingrediente.
+Citire PIZZA
+ - la citire intrebam cate ingrediente se citesc.
+ - dupa n ingrediente citie utilizatorul poate alege sa mai introduca cateva sau nici unul.
+ # structura de date o vom folosii in meniu
+ # cand adaugam o piiza in meniu ii trecem id-ul si reteta
+*** Avem PizzaVegetarian derivata din Pizza
+Nu are mare diferente, dar are o variabila statica, pt a numara obiectele create.
+*** Avem PizzaOnline derivata din Pizza si produsOnline
+Avem mostenire dubla.
+In produs online avem distanta pe care se face livrarea si se va modifica metoda de calcul
+** Template Meniu
+In meniu o sa retinek doar lista de ingrediente.
+La alegerea ingredientelor(Pizzei) se face comanda, normala sau online.
+Se pot comanda mai multe Pizza, se retin cumva bani.
+*** TODO sa il las normal sau sa lucreze cu toate tipurile de pizza?
+Sa fac cu vector de pointeri pt late binding?
+Pot sa il las asa
+Dar ce mai fac cu sablonul specializat pt comanda online?
+*** TODO de implementat templaturile pt comenzi

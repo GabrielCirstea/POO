@@ -11,15 +11,18 @@ template<class T>
 class Meniu
 {
 private:
+  // deci structura e un rahat
   unordered_map<int,list<ingredient> > lista;
   // la citire bagam ingredientele
   // la comenzi facem Pizza si calculam pretul
+  // sa retinem si Pizza intr-un vector pt RTTI?
+  // si ce mai facem cu map ?
 };
 
 //-------comanda---------
 template <class T>
 class Comanda
-{
+{ // construieste Pizza din ingredientele date  si calculeaza pretul
   myVector<T> v;
 public:
   Comanda();
@@ -45,12 +48,12 @@ public:
   Comanda_Online(const Comanda_Online&);
   ~Comanda_Online();
   float calc_pret() const;
+  void add_to_order(const T&);  // se mai adauga un produs in comanda
 };
 template <>
 class Comanda_Online<PizzaVegetariana>:public Comanda<PizzaVegetariana>
 {
-  static int vegetaleOnline;
-  //distata
+  static int vegetaleOnline;  // tinem minte cat am facut din vegetale
 public:
   Comanda_Online();
   Comanda_Online(const PizzaVegetariana&);

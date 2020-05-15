@@ -32,6 +32,7 @@ istream& operator>>(istream&,ingredient&);
 class produs
 {
  public:
+  // produs(){cout<<"produs\n";};
   virtual float calc_pret() const = 0;
   virtual void afisare(ostream&) const = 0;
   virtual void citire(istream&) = 0;
@@ -41,7 +42,7 @@ class produs
 ostream& operator<<(ostream&,const produs&);
 istream& operator>>(istream&,produs&);
 //----PIZZA-----
-class Pizza: virtual public produs
+class Pizza:virtual public produs
 {
 protected:
   string denumire;
@@ -70,7 +71,7 @@ protected:
   void operator=(const Pizza&);
 };
 //----------------PIZZA vegetala--------------
-class PizzaVegetariana:public Pizza
+class PizzaVegetariana:virtual public Pizza
 {   // nimic special cu pizza vegetariana fata de cea normala
     // are o variabila statica
 protected:
@@ -94,11 +95,11 @@ protected:
   float distanta;
 public:
   produsOnline(int dist = 0):distanta(dist){}
-  //virtual float calc_pret()=0;
+  // virtual float calc_pret()=0;
   float get_distance()const{return distanta;};
   void set_distance(float dist=0){distanta = dist;};
 };
-class PizzaOnline:public Pizza, public produsOnline
+class PizzaOnline:virtual public Pizza, virtual public produsOnline
 {
 public:
   PizzaOnline(string, list<ingredient>&, float pret = 0, float dist = 0);   // pret manopera
@@ -110,10 +111,10 @@ public:
   void citire(istream&);
   void operator=(const PizzaOnline&);
 };
-class PizzaVegOnline: public PizzaVegetariana, public PizzaOnline
+class PizzaVegOnline: public PizzaVegetariana,public PizzaOnline
 {
 public:
-  PizzaVegOnline(string, list<ingredient>&, float pret = 0, float dist = 0);   // pret manopera
+  PizzaVegOnline(string, list<ingredient>&, float pret = 0, float dist = 0);
   PizzaVegOnline(string nume = "",float pret = 0, float dist = 0);
   PizzaVegOnline(Pizza&, float dist=0);
   PizzaVegOnline(PizzaOnline&);

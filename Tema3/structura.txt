@@ -1,0 +1,70 @@
+//----PRODUS-----
+class produs
+{
+ public:
+  produs(){cout<<"produs\n";};
+  virtual float calc_pret() const = 0;
+  virtual void afisare(ostream&) const = 0;
+  virtual void citire(istream&) = 0;
+};
+ostream& operator<<(ostream&,const produs&);
+istream& operator>>(istream&,produs&);
+//----PIZZA-----
+class Pizza: virtual public produs
+{
+protected:
+  string denumire;
+  // ceva ingrediente
+  list<ingredient> reteta;
+  const float manopera;  // poate ca o putem face statica, sa fie acceasi pt toate pizza
+ public:
+  Pizza(string, list<ingredient>&, float pret = 0);   // pret manopera
+  Pizza(string nume = "",float pret = 0);
+  Pizza(Pizza&);
+  //~Pizza();  // elementele sunt alocate static
+  //get-eri
+  float get_manopera() const {return manopera;};
+  const list<ingredient>& get_ingred() const {return reteta;};
+  float calc_pret() const; // pretul total al produsului
+  //set-eri
+  void set_ingred(list<ingredient>& ingred); // seteaza o noua lista de ingrediente
+  void add_ingred(ingredient& ingred); // adauga inca un gredient.
+  void remove_ingred(int index); // sterge ingredientul dupa index(afisat in listare)
+  void remove_ingred(const string& nume); // sterge prima aparitie a ingredientului cu numele dat
+  // output
+  void list_ingred() const;  // listeaza ingredientele.
+  virtual void afisare(ostream&) const;
+  // input
+  virtual void citire(istream&);
+  void operator=(const Pizza&);
+};
+Pizza::Pizza(string nume,float pret):produs(),manopera(pret),denumire(nume)
+{cout<<"Piza goala\n";}
+Pizza::Pizza(string nume,list<ingredient> &ingred, float pret):produs(),manopera(pret),denumire(nume)
+{
+  cout<<"Pizza facuta\n";
+  set_ingred(ingred); // ca sa folosim metoda
+}
+//----------------PIZZA vegetala--------------
+class PizzaVegetariana:virtual public Pizza
+{   // nimic special cu pizza vegetariana fata de cea normala
+    // are o variabila statica
+protected:
+  static int numarVegetale;
+  int porumb;
+public:
+  PizzaVegetariana(string, list<ingredient>&, float pret = 0);   // pret manopera
+  PizzaVegetariana(string nume = "",float pret = 0);
+  PizzaVegetariana(PizzaVegetariana&);
+  PizzaVegetariana(Pizza&);
+  ~PizzaVegetariana();
+  static int numar();
+  void afisare(ostream&) const;
+  void citire(istream&);
+  void operator=(const PizzaVegetariana&);
+};
+PizzaVegetariana::PizzaVegetariana(string nume, list<ingredient>& ingred, float pret):produs(),Pizza(nume,ingred,pret)   // pret manopera
+{
+  cout<<"Alta vegetala alocata\n";
+  numarVegetale++;
+}

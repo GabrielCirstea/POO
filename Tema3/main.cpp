@@ -46,6 +46,31 @@ void testPizza()
   cin>>p2;
   cout<<p2;
 }
+template<class S,class T>
+void allocatorFunc(S *&trg, T &src)
+{
+  Pizza* p = dynamic_cast<Pizza*>(&src);
+  if(p)
+    {
+     trg = new Pizza(*p);
+    }
+  PizzaOnline* po = dynamic_cast<PizzaOnline*>(&src);
+  if(po)
+    {
+      trg = new PizzaOnline(*po);
+    }
+  PizzaVegetariana *pv = dynamic_cast<PizzaVegetariana*>(&src);
+  if(pv)
+    {
+      trg = new PizzaVegetariana(*pv);
+    }
+  PizzaVegOnline *pov = dynamic_cast<PizzaVegOnline*>(&src);
+  if(pov)
+  {
+    trg = new PizzaVegOnline(*pov);
+  }
+
+}
 void testTemplateMeniu()
 {
   Pizza p1("darve",27.2f);
@@ -63,6 +88,7 @@ void testTemplateMeniu()
   list<ingredient> p;
   p.push_back(a);
   p.push_back(a);
+  // cout<<p1<<endl;
   PizzaVegOnline p2("nume",p,3);
   cout<<"alocat\n";
   p2.set_distance(29);
@@ -71,7 +97,12 @@ void testTemplateMeniu()
   myVector<PizzaVegOnline> PVVZ;
   PVVZ.push_back(p2); // probleme la copiere cu apelarea constructorului in new
   PVVZ.push_back(p2);
-  cout<<PVVZ[1];
+  // cout<<PVVZ[1];
+  Pizza *test ;
+  cout<<"----Alocare:\n";
+  allocatorFunc(test,p2);
+  // cout<<*test;
+  // delete test;
   return;
   Meniu<Pizza> M;
   // M+=p2;
