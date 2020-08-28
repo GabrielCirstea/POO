@@ -52,7 +52,7 @@ protected:
  public:
   Pizza(string, list<ingredient>&, float pret = 0);   // pret manopera
   Pizza(string nume = "",float pret = 0);
-  Pizza(Pizza&);
+  Pizza(const Pizza&);
   //~Pizza();  // elementele sunt alocate static
   //get-eri
   float get_manopera() const {return manopera;};
@@ -80,8 +80,8 @@ protected:
 public:
   PizzaVegetariana(string, list<ingredient>&, float pret = 0);   // pret manopera
   PizzaVegetariana(string nume = "",float pret = 0);
-  PizzaVegetariana(PizzaVegetariana&);
-  PizzaVegetariana(Pizza&);
+  PizzaVegetariana(const PizzaVegetariana&);
+  PizzaVegetariana(const Pizza&);
   ~PizzaVegetariana();
   static int numar();
   void afisare(ostream&) const;

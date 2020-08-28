@@ -24,7 +24,7 @@ class myVector
         out<<vctor[i]<<endl;
       }
   }
-  T& operator[](int index)
+  const T& operator[](int index) const
     {
       return vctor[index];
     }

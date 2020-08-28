@@ -5,6 +5,23 @@
 #include "produs.h"
 #include "Meniu.h"
 using namespace std;
+void Pause()
+{
+  cout<<"Apasati orice tasta pentru a va intoarce la meniu. ";
+  cin.get();
+  cin.get();
+
+}
+void Clear()
+{
+#if defined _WIN32
+  system("cls");
+#elif defined (__LINUX__) || defined(__gnu_linux__) || defined(__linux__)
+  system("clear");
+#elif defined (__APPLE__)
+  system("clear");
+#endif
+}
 
 void testIngred()
 {
@@ -47,27 +64,27 @@ void testPizza()
   cout<<p2;
 }
 template<class S,class T>
-void allocatorFunc(S *&trg, T &src)
-{
+void allocatorFunc(S **trg, T &src)
+{ // poate ne usureaza munca la late binding
   Pizza* p = dynamic_cast<Pizza*>(&src);
   if(p)
-    {
-     trg = new Pizza(*p);
-    }
+  {
+    *trg = new Pizza(*p);
+  }
   PizzaOnline* po = dynamic_cast<PizzaOnline*>(&src);
   if(po)
-    {
-      trg = new PizzaOnline(*po);
-    }
+  {
+    *trg = new PizzaOnline(*po);
+  }
   PizzaVegetariana *pv = dynamic_cast<PizzaVegetariana*>(&src);
   if(pv)
-    {
-      trg = new PizzaVegetariana(*pv);
-    }
+  {
+    *trg = new PizzaVegetariana(*pv);
+  }
   PizzaVegOnline *pov = dynamic_cast<PizzaVegOnline*>(&src);
   if(pov)
   {
-    trg = new PizzaVegOnline(*pov);
+    *trg = new PizzaVegOnline(*pov);
   }
 
 }
@@ -92,31 +109,35 @@ void testTemplateMeniu()
   PizzaVegOnline p2("nume",p,3);
   cout<<"alocat\n";
   p2.set_distance(29);
+  p2.set_ingred(carne);
   cout<<"setat\n";
-  cout<<p2<<endl;
+  PizzaVegOnline p3(p2);
+  // cout<<p2<<endl;
   myVector<PizzaVegOnline> PVVZ;
   PVVZ.push_back(p2); // probleme la copiere cu apelarea constructorului in new
-  PVVZ.push_back(p2);
-  // cout<<PVVZ[1];
-  Pizza *test ;
+  PVVZ.push_back(p3);
+  cout<<PVVZ[1];
+  produs *test = new PizzaVegOnline;
   cout<<"----Alocare:\n";
-  allocatorFunc(test,p2);
+  allocatorFunc(&test,p2);
   // cout<<*test;
-  // delete test;
-  return;
-  Meniu<Pizza> M;
-  // M+=p2;
-  // cout<<M[0];
-  PizzaVegetariana v1("nume",p,3);
-  Pizza *v2;
-  v2 = new PizzaVegetariana;
-  cout<<"Vegetariana\n";
-  cout<<v1<<endl;
-  *v2 = v1;
-  cout<<*v2<<endl;
-  cin>>*v2;
-  cout<<"Nr: "<<PizzaVegetariana::numar()<<endl;
+  delete test;
+  cout<<"Dupa delete\n";
+  Meniu<produs> M;
+  M+= p2;
+  cout<<M<<endl;
+  M.comanda();
+  cout<<"=====Comenzi====";
+  Comanda_Online<PizzaVegOnline> C;
+  C+=p2;
+  C+=p3;
+  cout<<"--------------Din comenzi:\n";
+  C.afisare(cout);
+  cout<<"Pret total: "<<C.calc_pret()<<endl;
+  cout<<"Nr vanzari: "<<C.get_number()<<endl;
+  cout<<"Incasari: "<<C.get_total_income()<<endl;
 }
+
 int main()
 {
   cout<<"Salutare!\n";

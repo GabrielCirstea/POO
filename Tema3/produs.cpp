@@ -56,7 +56,7 @@ Pizza::Pizza(string nume,list<ingredient> &ingred, float pret):manopera(pret),de
   cout<<"Pizza facuta\n";
   set_ingred(ingred); // ca sa folosim metoda
 }
-Pizza::Pizza(Pizza& P):manopera(P.manopera),denumire(P.denumire),reteta(P.reteta)
+Pizza::Pizza(const Pizza& P):manopera(P.manopera),denumire(P.denumire),reteta(P.reteta)
 {}
 void Pizza::set_ingred(list<ingredient> &ingred)
 {
@@ -91,7 +91,7 @@ void Pizza::list_ingred() const
   int nr = 0;
   for(const ingredient &i:reteta)
     {
-      cout<<"Ingredient "<<nr++<<":\n";
+      cout<<"Ingredient "<<++nr<<":\n";
       cout<<i;
       cout<<"------\n";
     }
@@ -166,11 +166,11 @@ PizzaVegetariana::PizzaVegetariana(string nume,float pret):Pizza(nume,pret)
 {
   numarVegetale++;
 }
-PizzaVegetariana::PizzaVegetariana(PizzaVegetariana& p):Pizza(p)
+PizzaVegetariana::PizzaVegetariana(const PizzaVegetariana& p):Pizza(p)
 {
   numarVegetale++;
 }
-PizzaVegetariana::PizzaVegetariana(Pizza& p):Pizza(p)
+PizzaVegetariana::PizzaVegetariana(const Pizza& p):Pizza(p)
 {
   numarVegetale++;
 }
