@@ -5,6 +5,7 @@
 #include "produs.h"
 #include "Meniu.h"
 using namespace std;
+
 void Pause()
 {
   cout<<"Apasati orice tasta pentru a va intoarce la meniu. ";
@@ -12,6 +13,7 @@ void Pause()
   cin.get();
 
 }
+
 void Clear()
 {
 #if defined _WIN32
@@ -38,6 +40,7 @@ void testIngred()
   b.set_price(2.04f);
   cout<<"----\n"<<b;
 }
+
 void testPizza()
 {
   Pizza p1("darve",27.2f);
@@ -63,6 +66,7 @@ void testPizza()
   cin>>p2;
   cout<<p2;
 }
+
 template<class S,class T>
 void allocatorFunc(S **trg, T &src)
 { // poate ne usureaza munca la late binding
@@ -88,6 +92,7 @@ void allocatorFunc(S **trg, T &src)
   }
 
 }
+
 void testTemplateMeniu()
 {
   Pizza p1("darve",27.2f);

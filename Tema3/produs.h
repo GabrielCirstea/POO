@@ -1,8 +1,11 @@
 #pragma once
+
 using namespace std;
+
 #include <iostream>
 #include <list>
 #include <unordered_map>
+
 class ingredient
 {
  private:
@@ -26,8 +29,10 @@ class ingredient
   void afisare(ostream&) const;
   void citire(istream&);
 };
+
 ostream& operator<<(ostream&,const ingredient&);
 istream& operator>>(istream&,ingredient&);
+
 //----PRODUS-----
 class produs
 {
@@ -37,10 +42,12 @@ class produs
   virtual void afisare(ostream&) const = 0;
   virtual void citire(istream&) = 0;
 };
+
 // nu e nevoie de firend, in >>/<< apelez functia de citire/afisare
 // print virtual pe afisare/citire in produs, nu e nevoie sa supra incarc operatorii <</>> si pt clasele derivate
 ostream& operator<<(ostream&,const produs&);
 istream& operator>>(istream&,produs&);
+
 //----PIZZA-----
 class Pizza:virtual public produs
 {
@@ -70,6 +77,7 @@ protected:
   virtual void citire(istream&);
   void operator=(const Pizza&);
 };
+
 //----------------PIZZA vegetala--------------
 class PizzaVegetariana:virtual public Pizza
 {   // nimic special cu pizza vegetariana fata de cea normala
@@ -88,6 +96,7 @@ public:
   void citire(istream&);
   void operator=(const PizzaVegetariana&);
 };
+
 //-------------ONLINE-----------
 class produsOnline: virtual public produs
 {
@@ -99,6 +108,7 @@ public:
   float get_distance()const{return distanta;};
   void set_distance(float dist=0){distanta = dist;};
 };
+
 class PizzaOnline:virtual public Pizza, virtual public produsOnline
 {
 public:
@@ -111,6 +121,7 @@ public:
   void citire(istream&);
   void operator=(const PizzaOnline&);
 };
+
 class PizzaVegOnline: public PizzaVegetariana,public PizzaOnline
 {
 public:

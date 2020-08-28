@@ -5,6 +5,7 @@ class myVector
   T* vctor;
   int lung;
  public:
+
   myVector(int size = 0)
     {
       lung = size;
@@ -13,10 +14,12 @@ class myVector
       else
         vctor = NULL;
     }
+
   int size() const
   {
     return lung;
   }
+
   void poster(ostream& out) const
   {///afisare
     for(int i=0;i<lung;i++)
@@ -24,10 +27,12 @@ class myVector
         out<<vctor[i]<<endl;
       }
   }
+
   const T& operator[](int index) const
     {
       return vctor[index];
     }
+
   void push_back(const T& elem)
   {
     T* buff = new T[lung+1];
@@ -40,6 +45,7 @@ class myVector
     vctor = buff;
     vctor[lung++] = elem;
   }
+
   void contentCopy(const myVector<T> v)
   {
     if(vctor)
@@ -49,10 +55,12 @@ class myVector
     for(int i=0;i<lung;i++)
       vctor[i] = v[i];
   }
+
   ~myVector()
     {
       delete[] vctor;
     }
+
   void operator=(const myVector<T> v)
     {
      this->contentCopy(v);

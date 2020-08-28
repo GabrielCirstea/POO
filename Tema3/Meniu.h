@@ -24,11 +24,13 @@ public:
   void insert(const T&);    // adaugam Pizza in comanda
   void operator+=(const T& elem){this->insert(elem);};
 };
+
 template<class T>
 Comanda<T>::Comanda(const Comanda& C)
 {
   v = C.v;
 }
+
 template<class T>
 float Comanda<T>::calc_pret() const
 {
@@ -40,22 +42,26 @@ float Comanda<T>::calc_pret() const
     }
   return pret;
 }
+
 template<class T>
 void Comanda<T>::afisare(ostream& out) const
 {
   v.poster(out);
 }
+
 template<class T>
 void Comanda<T>::insert(const T& elem)
 {
   v.push_back(elem);
 }
+
 template<class T>
 ostream& operator<<(ostream& out,Comanda<T> C)
 {
   C.afisare(out);
   return out;
 }
+
 //------specializare online--------
 template <class T> class Comanda_Online: public Comanda<T>
 {
@@ -69,13 +75,16 @@ public:
   // float calc_pret() const;
   virtual int get_number(){return vanzariOnline;};
 };
+
 template<class T>
 int Comanda_Online<T>::vanzariOnline;
+
 template<class T>
 Comanda_Online<T>::Comanda_Online(const Comanda_Online& C):Comanda<T>(C)
 {
   vanzariOnline++;
 }
+
 template <>
 class Comanda_Online<PizzaVegOnline>:public Comanda<PizzaVegetariana>
 {
@@ -83,11 +92,13 @@ class Comanda_Online<PizzaVegOnline>:public Comanda<PizzaVegetariana>
   static float total_income;
 public:
   Comanda_Online(){vegetaleOnline++;};
+
   Comanda_Online(const Comanda_Online& C)
   {
     v = C.v;
     vegetaleOnline++;
   }
+
   ~Comanda_Online(){};
   float get_total_income()const{return total_income;};
   int get_number()const{return vegetaleOnline;};
@@ -96,14 +107,16 @@ public:
     v.push_back(elem);
     total_income+=elem.calc_pret();
   }
+
   void operator+=(const PizzaVegOnline& elem){this->insert(elem);};
 };
+
 template<>
 int Comanda_Online<PizzaVegOnline>::vegetaleOnline;
+
 template<>
 float Comanda_Online<PizzaVegOnline>::total_income;
 template<class T>
-
 
 
 
@@ -126,6 +139,7 @@ public:
     else
       v = NULL;
   }
+
   ~Meniu()
   {
     if(nr)
@@ -137,6 +151,7 @@ public:
       }
     delete[] v;
   }
+
   void citire(istream& in)
   {
     for(int i=0;i<nr;)
@@ -164,6 +179,7 @@ public:
           }
       }
   }
+
   void afisare(ostream& out)
   {
     for(int i=0;i<nr;i++)
@@ -172,6 +188,7 @@ public:
         out<<*v[i]<<endl;
       }
   }
+
   void comanda_online()
   {
     int ok = 1;
@@ -215,6 +232,7 @@ public:
       }
     cout<<"Total de plata: "<<C.calc_pret() + CV.get_total_income()<<endl;
   }
+
   void comanda_standard()
   {
     int ok = 1;
@@ -260,6 +278,7 @@ public:
       }
     cout<<"Total de plata: "<<C.calc_pret() + CV.calc_pret()<<endl;
   }
+
   void comanda()
   {
     cout<<"Doriti sa comandati Online(1) sau la magazin(2)";
@@ -278,6 +297,7 @@ public:
       default:
         cout<<"Nu avem aceasta optiune.\n";
       }
+
   }
   void insert(const T& elem)
   {
@@ -302,11 +322,13 @@ public:
     *v[nr] = elem;
     nr++;
   }
+
   void operator+=(const T& elem)
   {
     this->insert(elem);
   }
 };
+
 template<class T>
 ostream& operator<<(ostream& out,Meniu<T>& M)
 {
